@@ -1,31 +1,73 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85 d17.13
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OOP - Giải PTB2", "OOP - Giải PTB2\OOP - Giải PTB2.vcxproj", "{BC719B84-EEBC-4D24-AC0D-436F11F189BF}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BC719B84-EEBC-4D24-AC0D-436F11F189BF}.Debug|x64.ActiveCfg = Debug|x64
-		{BC719B84-EEBC-4D24-AC0D-436F11F189BF}.Debug|x64.Build.0 = Debug|x64
-		{BC719B84-EEBC-4D24-AC0D-436F11F189BF}.Debug|x86.ActiveCfg = Debug|Win32
-		{BC719B84-EEBC-4D24-AC0D-436F11F189BF}.Debug|x86.Build.0 = Debug|Win32
-		{BC719B84-EEBC-4D24-AC0D-436F11F189BF}.Release|x64.ActiveCfg = Release|x64
-		{BC719B84-EEBC-4D24-AC0D-436F11F189BF}.Release|x64.Build.0 = Release|x64
-		{BC719B84-EEBC-4D24-AC0D-436F11F189BF}.Release|x86.ActiveCfg = Release|Win32
-		{BC719B84-EEBC-4D24-AC0D-436F11F189BF}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {AF8B7558-788B-465D-B643-88A7AF08D9F4}
-	EndGlobalSection
-EndGlobal
+﻿#include <iostream>
+#include <cmath>
+using namespace std;
+
+class equation {
+private:
+    double a, b, c;
+public:
+    double PTB2(double, double, double);
+};
+
+double equation::PTB2(double a, double b, double c)
+{
+    double delta;
+    double x, x1, x2;
+    double phan_thuc, phan_ao;
+
+    delta = pow(b, 2) - 4 * a * c;  // Tính delta
+
+    // Xuất kết quả
+    if (delta > 0)
+    {
+        cout << "Phuong trinh co 2 nghiem thuc phan biet: " << endl;
+        x1 = ((-b) + sqrt(delta)) / (2 * a);
+        x2 = ((-b) - sqrt(delta)) / (2 * a);
+        cout << "x1 = " << x1 << endl;
+        cout << "x2 = " << x2 << endl;
+    }
+    else if (delta == 0)
+    {
+        cout << "Phuong trinh co nghiem thuc kep: " << endl;
+        x = (-b) / (2 * a);
+        cout << "x1 = x2 = " << x << endl;
+    }
+    else
+    {
+        cout << "Phuong trinh co 2 nghiem phuc phan biet: " << endl;
+        phan_ao = (sqrt(-delta)) / (2 * a); 
+        if (b == 0)
+        {
+            phan_thuc = 0;
+            cout << "x1 = " << phan_ao << " * i " << endl;
+            cout << "x2 = " << " - " << phan_ao << " * i " << endl;
+        }     
+        else
+        {
+            phan_thuc = (-b);           
+            cout << "x1 = " << phan_thuc << " + " << phan_ao << " * i " << endl;
+            cout << "x2 = " << phan_thuc << " - " << phan_ao << " * i " << endl;
+        }     
+    }
+
+    return 0;
+}
+
+int main()
+{
+    double a, b, c;
+
+    cout << "Nhap 3 he so a, b, c: ";
+    cin >> a >> b >> c;
+    cout << "Phuong trinh ban nhap la: " << a << "x^2 + " << b << "x + " << c << " = 0 " << endl;
+
+    equation root;
+
+
+    if (a == 0)
+        cout << "Day khong phai la phuong trinh bac 2! Dau vao khong hop le!" << endl;
+    else        
+        root.PTB2(a, b, c);
+
+    return 0;
+}

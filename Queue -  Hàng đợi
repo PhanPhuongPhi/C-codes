@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std; 
+
+struct node {
+    int data;
+    node* next;
+};
+typedef node* Pnode;
+
+struct queue_int {
+    Pnode H, T;
+    queue_int();    // Constructor - Hàm thiết lập
+    ~queue_int();   // Destructor - Hàm hủy
+    void add(int);
+    int get();
+    bool empty();   // Kiểm tra rỗng
+};
+
+int main()
+{
+    queue_int q;
+
+    int n, x;
+    cout << "Nhap so phan tu ban muon them vao hang doi: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cout << "Nhap phan tu thu " << i + 1 << ": ";
+        cin >> x;
+        q.add(x);
+    }
+
+    cout << "Cac phan tu trong hang doi: ";
+    while (!q.empty()) {
+        cout << q.get() << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+queue_int::queue_int()
+{
+    H = T = NULL;
+}
+
+queue_int::~queue_int()
+{
+    while (H != NULL)
+    {
+        Pnode p;
+        p = H;
+        H = H->next;
+        delete p;
+    }
+}
+
+bool queue_int::empty()
+{
+    if (H == NULL) 
+        return true; 
+    return false;
+}
+
+void queue_int::add(int x)
+{
+    if (H == NULL)
+    {
+        H = T = new node;
+        H->data = x;
+        H->next = NULL;
+    }
+    else
+    {
+        T->next = new node;
+        T = T->next;
+        T->data = x;
+        T->next = NULL;
+    }
+}
+
+int queue_int::get()
+{
+    if (empty()) 
+    {
+        cout << "Hang doi rong!" << endl;
+        return -1; // hoặc một giá trị đặc biệt khác để báo lỗi
+    }
+
+    int x = H->data;
+    Pnode p = H;
+    H = H->next;
+    delete p;
+    return x;
+}

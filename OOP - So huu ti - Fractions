@@ -1,0 +1,168 @@
+#include <iostream>
+#include <cmath>
+#include <vector>
+using namespace std;
+
+double gcd(double a, double b)
+{
+    double m, n;
+    m = a;
+    n = b;
+    while (m > 0 && n > 0)
+    {
+        if (m > n)
+            m -= n;
+        else
+            n -= m;
+    }
+    return m + n;
+}
+
+class so_huu_ti {
+private:
+    double numerator, denominator;
+public:
+    so_huu_ti(double num, double den)
+    {
+        if (den == 0)
+            throw invalid_argument("Mẫu số phải khác 0!");
+
+        double gcd_val = gcd(abs(num), abs(den)); // Rút gọn phân số bằng GCD
+        numerator = num / gcd_val;
+        denominator = den / gcd_val;
+
+        // Đảm bảo mẫu số luôn dương
+        if (denominator < 0)
+        {
+            numerator = -numerator;
+            denominator = -denominator;
+        }
+    }
+
+    void print() const
+    {
+        cout << numerator << " / " << denominator << endl;
+    }
+
+    // Cộng 2 số hữu tỉ 
+    so_huu_ti operator+(const so_huu_ti& other)
+    {
+        double new_num = numerator * other.denominator + other.numerator * denominator;
+        double new_den = denominator * other.denominator;
+        return so_huu_ti(new_num, new_den);
+    }
+
+    // Trừ 2 số hữu tỉ 
+    so_huu_ti operator-(const so_huu_ti& other)
+    {
+        double new_num = numerator * other.denominator - other.numerator * denominator;
+        double new_den = denominator * other.denominator;
+        return so_huu_ti(new_num, new_den);
+    }
+
+    // Nhân 2 số hữu tỉ 
+    so_huu_ti operator*(const so_huu_ti& other)
+    {
+        double new_num = numerator * other.numerator;
+        double new_den = denominator * other.denominator;
+        return so_huu_ti(new_num, new_den);
+    }
+
+    // Chia 2 số hữu tỉ 
+    so_huu_ti operator/(const so_huu_ti& other)
+    {
+        double new_num = numerator * other.denominator;
+        double new_den = denominator * other.numerator;
+        return so_huu_ti(new_num, new_den);
+    }
+};
+
+int main()
+{
+    try
+    {
+        int num1, den1, num2, den2;
+        cout << "Nhập tử số và mẫu số của phân số thứ nhất: ";
+        cin >> num1 >> den1;
+        cout << "Nhập tử số và mẫu số của phân số thứ hai: ";
+        cin >> num2 >> den2;
+
+        so_huu_ti f1(num1, den1);
+        so_huu_ti f2(num2, den2);
+
+        cout << "Phân số thứ nhất: "; f1.print();
+        cout << "Phân số thứ hai: "; f2.print();
+
+        int choice;
+        do {
+            cout << "\n------ MENU ------\n";
+            cout << "1. Cộng (f1 + f2)\n";
+            cout << "2. Hiệu (f1 - f2)\n";
+            cout << "3. Hiệu (f2 - f1)\n";
+            cout << "4. Nhân (f1 * f2)\n";
+            cout << "5. Thương (f1 / f2)\n";
+            cout << "6. Thương (f2 / f1)\n";
+            cout << "0. Thoát\n";
+            cout << "Chọn thao tác: ";
+            cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+            {
+                so_huu_ti result = f1 + f2;
+                cout << "Kết quả: ";
+                result.print();
+                break;
+            }
+            case 2:
+            {
+                so_huu_ti result = f1 - f2;
+                cout << "Kết quả: ";
+                result.print();
+                break;
+            }
+            case 3:
+            {
+                so_huu_ti result = f2 - f1;
+                cout << "Kết quả: ";
+                result.print();
+                break;
+            }
+            case 4:
+            {
+                so_huu_ti result = f1 * f2;
+                cout << "Kết quả: ";
+                result.print();
+                break;
+            }
+            case 5:
+            {
+                so_huu_ti result = f1 / f2;
+                cout << "Kết quả: ";
+                result.print();
+                break;
+            }
+            case 6:
+            {
+                so_huu_ti result = f2 / f1;
+                cout << "Kết quả: ";
+                result.print();
+                break;
+            }
+            case 0:
+                cout << "Thoát chương trình.\n";
+                break;
+            default:
+                cout << "Lựa chọn không hợp lệ. Vui lòng thử lại.\n";
+            }
+
+        } while (choice != 0);
+    }
+    catch (const exception& e)
+    {
+        cout << "Lỗi: " << e.what() << endl;
+    }
+
+    return 0;
+}
